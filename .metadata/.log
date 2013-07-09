@@ -14,3 +14,11 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.
 
 !ENTRY com.android.ide.eclipse.adt 4 0 2013-07-08 22:57:59.638
 !MESSAGE Failed to load properties file for project 'JavaI1307Week1'
+
+!ENTRY org.eclipse.ui.ide 4 4 2013-07-08 23:06:18.443
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 2 1 2013-07-08 23:06:18.459
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-07-08 23:06:18.459
+!MESSAGE The project description file (.project) for 'JavaI1307Week1' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
