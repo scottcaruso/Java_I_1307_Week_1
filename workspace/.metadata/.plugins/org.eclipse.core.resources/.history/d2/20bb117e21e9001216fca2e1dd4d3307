@@ -49,7 +49,6 @@ public class MainActivity extends Activity {
         ll.addView(et);
         
         Button b = new Button(this);
-        b.setText("Click Me!");
         ll.addView(b);
     
         setContentView(ll);
