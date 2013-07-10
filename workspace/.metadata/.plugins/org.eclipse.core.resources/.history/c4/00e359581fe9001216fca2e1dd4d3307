@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 // TODO: Auto-generated Javadoc
 
@@ -34,16 +33,9 @@ public class MainActivity extends Activity {
         ll.setOrientation(LinearLayout.VERTICAL);
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         ll.setLayoutParams(lp);
-        
-        
-        //Create and display a TextView
-        TextView tv = new TextView(this);
-        tv.setText("This is an example TextView.");
-        
-        ll.addView(tv);
     
-        setContentView(ll);
     }
+
 
     /* (non-Javadoc)
      * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)

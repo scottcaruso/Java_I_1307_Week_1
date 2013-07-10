@@ -42,8 +42,8 @@ public class MainActivity extends Activity {
         
         ll.addView(tv);
     
-        setContentView(ll);
     }
+
 
     /* (non-Javadoc)
      * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
