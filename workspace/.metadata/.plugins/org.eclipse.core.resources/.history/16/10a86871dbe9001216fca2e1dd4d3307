@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Log.d("Log","Button Clicked");	
+				Log.d("Button Clicked");	
 			}
 		});
         

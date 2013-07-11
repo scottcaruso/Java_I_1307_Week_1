@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,13 +52,6 @@ public class MainActivity extends Activity {
         Button b = new Button(this);
         b.setText("Click Me!");
         //ll.addView(b);
-        b.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Log.d("Log","Button Clicked");	
-			}
-		});
         
         LinearLayout form = new LinearLayout(this);
         form.setOrientation(LinearLayout.HORIZONTAL);
@@ -78,7 +70,7 @@ public class MainActivity extends Activity {
         short testShort = 4242;
         char testChar = 'a';
         String[] names = {"Scott","Andrea","Angelica"};
-        //Log.d("Log",Boolean.toString(testBool)+testString+testInt+testFloat+testDouble+testShort+testChar+names);
+        Log.d("Log",Boolean.toString(testBool)+testString+testInt+testFloat+testDouble+testShort+testChar+names);
           
         setContentView(ll);
     }

@@ -57,7 +57,8 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Log.d("Log","Button Clicked");	
+				// TODO Auto-generated method stub
+				
 			}
 		});
         
