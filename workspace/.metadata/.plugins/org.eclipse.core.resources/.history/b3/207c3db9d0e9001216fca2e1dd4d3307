@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         
         //Create and display a TextView
         TextView tv = new TextView(this);
-        tv.setText(getString(R.string.playerone)+","+getString(R.string.playertwo)+","+getString(R.string.playerthree)+".");
+        tv.setText("This is an example TextView.");
         
         ll.addView(tv);
         

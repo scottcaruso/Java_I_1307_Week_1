@@ -1,0 +1,7 @@
+<resources>
+    
+	<integer name="homeruns">30</integer>
+	<integer name="rbis">100</integer>
+	<integer name="steals">15</integer>
+    
+</resources>
