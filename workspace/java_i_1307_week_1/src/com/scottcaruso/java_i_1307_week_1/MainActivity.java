@@ -13,7 +13,7 @@ package com.scottcaruso.java_i_1307_week_1;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +27,10 @@ public class MainActivity extends Activity {
 	
 	LinearLayout mainLayout;
 	LinearLayout.LayoutParams mainParams;
+	LinearLayout viewForTextField;
 	EditText runsScoredEntry;
     TextView statInfoDisplay;
+	boolean aHugeNumberOfRuns = false; //this bool tells the app to change the background color if a huge number of runs was scored.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class MainActivity extends Activity {
         Button calculate = new Button(this);
         calculate.setText("Calculate");
         
-        LinearLayout viewForTextField = new LinearLayout(this);
+        viewForTextField = new LinearLayout(this);
         viewForTextField.setPadding(0, 30, 0, 0);
         viewForTextField.setBackgroundColor(Color.YELLOW);
         
@@ -68,16 +70,28 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) 
 			{
-				//Takes the integer the user entered, and runs the calculate method against it.
+				/*Takes the value the user entered, and first verifies that it is a valid integer.
+				 * If not, it gives a warning message to the user. If it is, it runs the calculate method against that integer
+				 * and then displays an appropriate message in the text view.
+				 */
 				int runsEntered = 0;
 				try {
 					runsEntered = Integer.parseInt(runsScoredEntry.getText().toString());
 				} catch (NumberFormatException e) {
-					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters.");
+					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters, and ensure that the value entered is greater than zero.");
 					e.printStackTrace();
 				}
-				float runsForThisTeam = calculateRunsPerGame(runsEntered);
-				Log.d("Log",Float.toString(runsForThisTeam));	
+				if (runsEntered > 0)
+				{
+					float runsForThisTeam = calculateRunsPerGame(runsEntered);
+					String runsPerGameString = "Your team averaged " + String.valueOf(runsForThisTeam) + " runs per game last season.";	
+					String teamRankingString = whereDoesThisTeamRank(runsForThisTeam);
+					statInfoDisplay.setText(runsPerGameString + " " + teamRankingString);
+					wasAHugeNumberOfRunsScored();
+				} else
+				{
+					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters, and ensure that the value entered is greater than zero.");
+				}
 			}
 		});
           
@@ -104,4 +118,51 @@ public class MainActivity extends Activity {
     	return average;
     }
     
+    /*This custom method creates an array of teams, ordered from best to worst in terms of runs scored. A for loop is run
+     * to determine where the selected team's average number of runs falls in this order, then it returns a string relevant to
+     * that team's position.
+     */
+ 
+    public String whereDoesThisTeamRank(float runsPerGame){
+    	String[] teamOrderedArray = {"Yankees","Red Sox","Rays","Orioles","Blue Jays"};
+    	int roundedRuns = (int) Math.floor(runsPerGame);
+        
+        for (int x = 1; x <= teamOrderedArray.length; x++)
+        {
+        	if (roundedRuns == x)
+        	{
+        		String betterTeamThan = teamOrderedArray[teamOrderedArray.length-x];
+        		int positionInRankings = 6-x;
+        		String fullCompliment = "Your team scored more runs per game than the " + betterTeamThan + " last season, which makes them the number " + positionInRankings + " ranked team last year!";
+        		aHugeNumberOfRuns = false;
+        		return fullCompliment;
+        	}
+        }
+    	if (roundedRuns > teamOrderedArray.length)
+    	{
+    		String betterTeamThan = "Yankees";
+    		int positionInRankings = 1;
+    		String fullCompliment = "Your team scored more runs per game than the " + betterTeamThan + " last season, which makes them the number " + positionInRankings + " ranked team last year!";
+    		aHugeNumberOfRuns = true;
+    		return fullCompliment;
+    	} else
+    	{
+    		String fullCompliment = "Your team scored fewer runs than all of the other teams last year. Bad form!";
+    		aHugeNumberOfRuns = false;
+    		return fullCompliment;
+    	}
+    }
+    
+    /*This method reads the Boolean value and changes the background color of the text field if so. Also handles the case where it
+     * has turned blue and needs to return to Yellow.
+     */
+    public void wasAHugeNumberOfRunsScored(){
+    	if (aHugeNumberOfRuns)
+    	{
+    		viewForTextField.setBackgroundColor(Color.BLUE);
+    	} else
+    	{
+    		viewForTextField.setBackgroundColor(Color.YELLOW);
+    	}
+    }
 }

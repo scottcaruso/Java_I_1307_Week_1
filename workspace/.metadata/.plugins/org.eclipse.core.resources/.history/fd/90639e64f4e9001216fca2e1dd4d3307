@@ -1,0 +1,126 @@
+/*
+ * Project java_i_1307_week_1
+ * 
+ * Package com.scottcaruso.java_i_1307_week_1
+ * 
+ * Author Scott Caruso
+ * 
+ * Date Jul 10, 2013
+ */
+
+package com.scottcaruso.java_i_1307_week_1;
+
+import java.util.HashMap;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.graphics.Color;
+//import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+// TODO: Auto-generated Javadoc
+
+public class MainActivity extends Activity {
+	
+	LinearLayout mainLayout;
+	LinearLayout.LayoutParams mainParams;
+	EditText runsScoredEntry;
+    TextView statInfoDisplay;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        HashMap<String,Object> teamMap = new HashMap<String,Object>();
+        teamMap.put("Yankees", 5);
+        teamMap.put("Red Sox", 4);
+        teamMap.put("Rays", 3);
+        teamMap.put("Orioles", 2);
+        teamMap.put("Blue Jays", 1);
+        
+        //Instatiate the main layour and its parameters
+        mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        mainLayout.setLayoutParams(mainParams);
+        
+        //Create a text edit view that allows the user to enter a number of runs scored for the season.
+        runsScoredEntry = new EditText(this);
+        runsScoredEntry.setHint("Tap here to enter the total number of runs scored by your team for the season.");
+        
+        //Create a button that starts a calculation based on the number entered above.
+        Button calculate = new Button(this);
+        calculate.setText("Calculate");
+        
+        LinearLayout viewForTextField = new LinearLayout(this);
+        viewForTextField.setPadding(0, 30, 0, 0);
+        viewForTextField.setBackgroundColor(Color.YELLOW);
+        
+        //Create and display a TextView underneath all of this. This text view will house the strings that get calculated
+        statInfoDisplay = new TextView(this);
+        statInfoDisplay.setLines(6);
+        statInfoDisplay.setText("A calculation of your team's per-game averages will go here!");
+        viewForTextField.addView(statInfoDisplay);
+        
+        //Add the three views to the Main Layout view
+        mainLayout.addView(runsScoredEntry);
+        mainLayout.addView(calculate);
+        mainLayout.addView(viewForTextField);
+        
+        calculate.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				/*Takes the value the user entered, and first verifies that it is a valid integer.
+				 * If not, it gives a warning message to the user. If it is, it runs the calculate method against that integer
+				 * and then displays an appropriate message in the text view.
+				 */
+				int runsEntered = 0;
+				try {
+					runsEntered = Integer.parseInt(runsScoredEntry.getText().toString());
+				} catch (NumberFormatException e) {
+					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters, and ensure that the value entered is greater than zero.");
+					e.printStackTrace();
+				}
+				if (runsEntered > 0)
+				{
+					float runsForThisTeam = calculateRunsPerGame(runsEntered);
+					String runsPerGameString = "Your team averaged " + String.valueOf(runsForThisTeam) + " runs per game last season.";	
+					statInfoDisplay.setText(runsPerGameString);
+				} else
+				{
+					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters, and ensure that the value entered is greater than zero.");
+				}
+			}
+		});
+          
+        setContentView(mainLayout);
+    }
+
+    /* (non-Javadoc)
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+    /*This custom method takes the total number of runs entered by the user, and then performs a calculation against the
+     * gamesinaseason static resource to return the average runs scored per game.
+     */
+    public float calculateRunsPerGame(int totalRuns){
+    	int gamesPlayed = getResources().getInteger(R.integer.gamesinaseason);
+    	float gamesPlayedFloat = gamesPlayed * 1.0f;
+    	float average = totalRuns/gamesPlayedFloat;
+    	return average;
+    }
+    
+}
