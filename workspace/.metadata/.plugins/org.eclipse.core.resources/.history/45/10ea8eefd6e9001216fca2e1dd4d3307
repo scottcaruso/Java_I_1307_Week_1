@@ -62,16 +62,9 @@ public class MainActivity extends Activity {
         
         ll.addView(form);
     
-        boolean testBool = true;
-        String testString = "String";
-        int testInt = 42;
-        float testFloat = 42.42f;
-        double testDouble = 42.4;
-        short testShort = 4242;
-        char testChar = 'a';
-        String[] names = {"Scott","Andrea","Angelica"};
-        Log.d("Log",Boolean.toString(testBool)+testString+testInt+testFloat+testDouble+testShort+testChar+names);
-          
+        //boolean testBool = true;
+        Log.d("Test debug string.","String");
+        
         setContentView(ll);
     }
 

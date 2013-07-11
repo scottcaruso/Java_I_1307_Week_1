@@ -70,8 +70,8 @@ public class MainActivity extends Activity {
         short testShort = 4242;
         char testChar = 'a';
         String[] names = {"Scott","Andrea","Angelica"};
-        Log.d("Log",Boolean.toString(testBool)+testString+testInt+testFloat+testDouble+testShort+testChar+names);
-          
+        
+        
         setContentView(ll);
     }
 
