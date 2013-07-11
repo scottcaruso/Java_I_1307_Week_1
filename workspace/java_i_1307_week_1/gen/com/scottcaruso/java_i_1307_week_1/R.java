@@ -27,9 +27,7 @@ public final class R {
         public static final int action_settings=0x7f080000;
     }
     public static final class integer {
-        public static final int homeruns=0x7f040000;
-        public static final int rbis=0x7f040001;
-        public static final int steals=0x7f040002;
+        public static final int gamesinaseason=0x7f040000;
     }
     public static final class menu {
         public static final int main=0x7f070000;
@@ -37,11 +35,6 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int baseballplayers=0x7f050003;
-        public static final int hello_world=0x7f050002;
-        public static final int playerone=0x7f050004;
-        public static final int playerthree=0x7f050006;
-        public static final int playertwo=0x7f050005;
     }
     public static final class style {
         /** 

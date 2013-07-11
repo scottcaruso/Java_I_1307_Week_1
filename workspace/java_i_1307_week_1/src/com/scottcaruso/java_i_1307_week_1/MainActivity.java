@@ -12,6 +12,7 @@ package com.scottcaruso.java_i_1307_week_1;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -24,63 +25,63 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	LinearLayout ll;
-	LinearLayout.LayoutParams lp;
+	LinearLayout mainLayout;
+	LinearLayout.LayoutParams mainParams;
+	EditText runsScoredEntry;
+    TextView statInfoDisplay;
 
-    /* (non-Javadoc)
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        ll = new LinearLayout(this);
-        ll.setOrientation(LinearLayout.VERTICAL);
-        lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        ll.setLayoutParams(lp);
+        //Instatiate the main layour and its parameters
+        mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        mainLayout.setLayoutParams(mainParams);
         
+        //Create a text edit view that allows the user to enter a number of runs scored for the season.
+        runsScoredEntry = new EditText(this);
+        runsScoredEntry.setHint("Tap here to enter the total number of runs scored by your team for the season.");
         
-        //Create and display a TextView
-        TextView tv = new TextView(this);
-        tv.setText(getString(R.string.playerone)+","+getString(R.string.playertwo)+","+getString(R.string.playerthree)+".");
+        //Create a button that starts a calculation based on the number entered above.
+        Button calculate = new Button(this);
+        calculate.setText("Calculate");
         
-        ll.addView(tv);
+        LinearLayout viewForTextField = new LinearLayout(this);
+        viewForTextField.setPadding(0, 30, 0, 0);
+        viewForTextField.setBackgroundColor(Color.YELLOW);
         
-        EditText et = new EditText(this);
-        et.setHint("Type something here.");
-        //ll.addView(et);
+        //Create and display a TextView underneath all of this. This text view will house the strings that get calculated
+        statInfoDisplay = new TextView(this);
+        statInfoDisplay.setLines(6);
+        statInfoDisplay.setText("A calculation of your team's per-game averages will go here!");
+        viewForTextField.addView(statInfoDisplay);
         
-        Button b = new Button(this);
-        b.setText("Click Me!");
-        //ll.addView(b);
-        b.setOnClickListener(new View.OnClickListener() {
+        //Add the three views to the Main Layout view
+        mainLayout.addView(runsScoredEntry);
+        mainLayout.addView(calculate);
+        mainLayout.addView(viewForTextField);
+        
+        calculate.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				Log.d("Log","Button Clicked");	
+			public void onClick(View v) 
+			{
+				//Takes the integer the user entered, and runs the calculate method against it.
+				int runsEntered = 0;
+				try {
+					runsEntered = Integer.parseInt(runsScoredEntry.getText().toString());
+				} catch (NumberFormatException e) {
+					statInfoDisplay.setText("An invalid text entry was made. Please enter a valid number with no letters or special characters.");
+					e.printStackTrace();
+				}
+				float runsForThisTeam = calculateRunsPerGame(runsEntered);
+				Log.d("Log",Float.toString(runsForThisTeam));	
 			}
 		});
-        
-        LinearLayout form = new LinearLayout(this);
-        form.setOrientation(LinearLayout.HORIZONTAL);
-        form.setLayoutParams(lp);
-        
-        form.addView(et);
-        form.addView(b);
-        
-        ll.addView(form);
-    
-        boolean testBool = true;
-        String testString = "String";
-        int testInt = 42;
-        float testFloat = 42.42f;
-        double testDouble = 42.4;
-        short testShort = 4242;
-        char testChar = 'a';
-        String[] names = {"Scott","Andrea","Angelica"};
-        //Log.d("Log",Boolean.toString(testBool)+testString+testInt+testFloat+testDouble+testShort+testChar+names);
           
-        setContentView(ll);
+        setContentView(mainLayout);
     }
 
     /* (non-Javadoc)
@@ -91,6 +92,16 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    /*This custom method takes the total number of runs entered by the user, and then performs a calculation against the
+     * gamesinaseason static resource to return the average runs scored per game.
+     */
+    public float calculateRunsPerGame(int totalRuns){
+    	int gamesPlayed = getResources().getInteger(R.integer.gamesinaseason);
+    	float gamesPlayedFloat = gamesPlayed * 1.0f;
+    	float average = totalRuns/gamesPlayedFloat;
+    	return average;
     }
     
 }
