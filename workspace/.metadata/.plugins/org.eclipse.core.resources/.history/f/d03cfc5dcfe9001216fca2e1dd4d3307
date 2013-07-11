@@ -46,20 +46,11 @@ public class MainActivity extends Activity {
         
         EditText et = new EditText(this);
         et.setHint("Type something here.");
-        //ll.addView(et);
+        ll.addView(et);
         
         Button b = new Button(this);
         b.setText("Click Me!");
-        //ll.addView(b);
-        
-        LinearLayout form = new LinearLayout(this);
-        form.setOrientation(LinearLayout.HORIZONTAL);
-        form.setLayoutParams(lp);
-        
-        form.addView(et);
-        form.addView(b);
-        
-        ll.addView(form);
+        ll.addView(b);
     
         setContentView(ll);
     }
